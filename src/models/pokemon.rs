@@ -8,7 +8,7 @@ pub struct Pokemon {
     pub weight: u32,
     pub types: Vec<PokemonType>,
     pub stats: Vec<PokemonStat>,
-    pub sprites: Vec<PokemonSprites>,
+    pub sprites: PokemonSprites,
 } 
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
