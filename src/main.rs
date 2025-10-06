@@ -1,5 +1,5 @@
 mod models;
-// mod errors;
+mod error;
 // mod config;
 // mod client;
 // mod services;

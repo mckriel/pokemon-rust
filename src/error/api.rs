@@ -1,4 +1,4 @@
-use thisError::Error;
+use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
@@ -20,7 +20,7 @@ pub enum ApiError {
 
 impl ApiError {
     pub fn internal(message: impl Into<String>) -> Self {
-        Self::Interal {
+        Self::Internal {
             message: message.into()
         }
     }
