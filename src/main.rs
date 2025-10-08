@@ -2,7 +2,7 @@ mod models;
 mod error;
 // mod config;
 mod client;
-// mod services;
+mod services;
 // mod handlers;
 
 use axum::{routing::get, Router};
