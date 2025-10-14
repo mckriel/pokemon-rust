@@ -1,4 +1,11 @@
 use thiserror::Error;
+use axum::{
+    http::StatusCode,
+    response::{IntoResponse, Response},
+    Json,
+};
+use serde_json::json;
+
 
 #[derive(Error, Debug)]
 pub enum ApiError {
@@ -29,5 +36,30 @@ impl ApiError {
         Self::BadRequest {
             message: message.into()
         }
+    }
+}
+
+impl IntoResponse for ApiError {
+    fn into_response(self) -> Response {
+        let (status, error_message) = match self {
+            ApiError::PokemonNotFound { name } => (
+                StatusCode::NOT_FOUND,
+                format!("Pokemon {} not found", name)
+            ),
+            ApiError::BadRequest { message } => (
+                StatusCode::BAD_REQUEST,
+                message,
+            ),
+            ApiError::ExternalApi(_) | ApiError::Json(_) | ApiError::Internal { .. } => (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "Internal server error".to_string(),
+            ),
+        };
+
+        let body = Json(json! ({
+            "error": error_message,
+        }));
+
+        (status, body).into_response()
     }
 }
